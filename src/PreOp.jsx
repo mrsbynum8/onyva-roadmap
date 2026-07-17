@@ -180,13 +180,15 @@ export default function PreOp() {
   const unlock = async (e) => {
     e.preventDefault();
     setSubmitState("sending");
+    const formatAnswer = (a) => `${String(a.n).padStart(2, "0")}. ${a.label}: ${a.value}`;
     const result = await submitPreOp({
       name: name.trim() || null,
       email: email.trim(),
-      blindSpotCount: blindSpots.length,
-      verifiedCount: verified.length,
       resultHeadline: readoutInfo.headline,
-      answers,
+      verifiedCount: verified.length,
+      blindSpotCount: blindSpots.length,
+      verifiedAnswers: verified.map(formatAnswer).join("\n") || "(none)",
+      blindSpots: blindSpots.map((a) => `${String(a.n).padStart(2, "0")}. ${a.label}`).join("\n") || "(none)",
     });
     setSubmitState(result.ok || result.skipped ? "sent" : "error");
     setStage("done");
