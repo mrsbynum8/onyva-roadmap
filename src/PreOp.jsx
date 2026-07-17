@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { submitPreOp } from "./webhooks";
 
 const questions = [
   {
@@ -149,10 +150,13 @@ function readout(blind) {
 }
 
 export default function PreOp() {
-  const [stage, setStage] = useState("start"); // start | quiz | interstitial | done
+  const [stage, setStage] = useState("start"); // start | quiz | interstitial | capture | done
   const [index, setIndex] = useState(0);
   const [answers, setAnswers] = useState([]); // {n, label, value|null}
   const [draft, setDraft] = useState("");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [submitState, setSubmitState] = useState("idle"); // idle | sending | sent | error
 
   const record = (value) => {
     const q = questions[index];
@@ -162,7 +166,7 @@ export default function PreOp() {
     if (index === 7) {
       setStage("interstitial");
     } else if (index === questions.length - 1) {
-      setStage("done");
+      setStage("capture");
     } else {
       setIndex(index + 1);
     }
@@ -170,7 +174,23 @@ export default function PreOp() {
 
   const blindSpots = answers.filter((a) => a.value === null);
   const verified = answers.filter((a) => a.value !== null);
+  const readoutInfo = readout(blindSpots.length);
   const q = questions[index];
+
+  const unlock = async (e) => {
+    e.preventDefault();
+    setSubmitState("sending");
+    const result = await submitPreOp({
+      name: name.trim() || null,
+      email: email.trim(),
+      blindSpotCount: blindSpots.length,
+      verifiedCount: verified.length,
+      resultHeadline: readoutInfo.headline,
+      answers,
+    });
+    setSubmitState(result.ok || result.skipped ? "sent" : "error");
+    setStage("done");
+  };
 
   return (
     <main className="flow-page">
@@ -284,11 +304,55 @@ export default function PreOp() {
         </section>
       )}
 
+      {stage === "capture" && (
+        <section className="flow-card">
+          <p className="flow-kicker">Sequence Complete</p>
+          <h1>Get your Diagnostic Readout.</h1>
+          <p className="flow-body">
+            {verified.length} pivot points verified. {blindSpots.length} blind
+            spots recorded. Enter your email to unlock the full readout — which
+            pivot points are critical vulnerabilities, and which are verified
+            baselines.
+          </p>
+          <form className="flow-answer" onSubmit={unlock}>
+            <input
+              className="flow-input"
+              type="text"
+              value={name}
+              placeholder="Name (optional)"
+              onChange={(e) => setName(e.target.value)}
+            />
+            <input
+              className="flow-input"
+              type="email"
+              value={email}
+              placeholder="doctor@clinic.com"
+              required
+              autoFocus
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <button
+              className="flow-primary"
+              type="submit"
+              disabled={!email.trim() || submitState === "sending"}
+            >
+              {submitState === "sending" ? "Unlocking…" : "Unlock Readout →"}
+            </button>
+          </form>
+        </section>
+      )}
+
       {stage === "done" && (
         <section className="flow-card flow-readout">
           <p className="flow-kicker">Diagnostic Readout</p>
-          <h1>{readout(blindSpots.length).headline}</h1>
-          <p className="flow-body">{readout(blindSpots.length).sub}</p>
+          <h1>{readoutInfo.headline}</h1>
+          <p className="flow-body">{readoutInfo.sub}</p>
+          {submitState === "error" && (
+            <p className="flow-note flow-note-error">
+              Your readout is shown below, but we couldn't reach our system to
+              save a copy — try Schedule The Scan directly instead.
+            </p>
+          )}
           <div className="readout-counts">
             <div>
               <b>{verified.length}</b>

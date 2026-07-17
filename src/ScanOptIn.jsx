@@ -1,9 +1,25 @@
 import { useState } from "react";
+import { submitScan } from "./webhooks";
 
 const tiers = ["< $1M", "$1M - $3M", "$3M - $5M", "$5M+"];
 
 export default function ScanOptIn() {
-  const [submitted, setSubmitted] = useState(false);
+  const [submitState, setSubmitState] = useState("idle"); // idle | sending | sent | error
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setSubmitState("sending");
+    const form = new FormData(e.currentTarget);
+    const result = await submitScan({
+      ownerName: form.get("ownerName"),
+      practiceName: form.get("practiceName"),
+      email: form.get("email"),
+      phone: form.get("phone"),
+      revenueTier: form.get("revenueTier"),
+      friction: form.get("friction") || null,
+    });
+    setSubmitState(result.ok || result.skipped ? "sent" : "error");
+  };
 
   return (
     <main className="flow-page">
@@ -31,41 +47,40 @@ export default function ScanOptIn() {
           Diagnosis before prescription. Always.
         </p>
 
-        {submitted ? (
-          <div className="scan-pending">
-            <b>Scheduler Connection Pending</b>
+        {submitState === "sent" || submitState === "error" ? (
+          <div className={submitState === "error" ? "scan-pending scan-pending-error" : "scan-pending"}>
+            <b>
+              {submitState === "error"
+                ? "Submission Failed"
+                : "Request Received"}
+            </b>
             <p>
-              Our scheduling system is being connected — your information was
-              not transmitted. Please check back shortly to book The Scan.
+              {submitState === "error"
+                ? "Your information could not be sent. Please try again, or reach out directly while we resolve this."
+                : "An Onyva operating partner will follow up directly to confirm your Scan. Our live scheduler is being connected — until then, expect a personal reply."}
             </p>
           </div>
         ) : (
-          <form
-            className="scan-form"
-            onSubmit={(e) => {
-              e.preventDefault();
-              setSubmitted(true);
-            }}
-          >
+          <form className="scan-form" onSubmit={handleSubmit}>
             <label>
               <span>Director / Owner Name</span>
-              <input className="flow-input" type="text" placeholder="Dr. John Doe" required />
+              <input className="flow-input" name="ownerName" type="text" placeholder="Dr. John Doe" required />
             </label>
             <label>
               <span>Practice Name</span>
-              <input className="flow-input" type="text" placeholder="Regen Medicine Clinic" required />
+              <input className="flow-input" name="practiceName" type="text" placeholder="Regen Medicine Clinic" required />
             </label>
             <label>
               <span>Direct Email</span>
-              <input className="flow-input" type="email" placeholder="doctor@clinic.com" required />
+              <input className="flow-input" name="email" type="email" placeholder="doctor@clinic.com" required />
             </label>
             <label>
               <span>Direct Phone</span>
-              <input className="flow-input" type="tel" placeholder="(555) 123-4567" required />
+              <input className="flow-input" name="phone" type="tel" placeholder="(555) 123-4567" required />
             </label>
             <label className="scan-wide">
               <span>Annual Revenue Tier</span>
-              <select className="flow-input" defaultValue="" required>
+              <select className="flow-input" name="revenueTier" defaultValue="" required>
                 <option value="" disabled>
                   Select revenue tier...
                 </option>
@@ -80,13 +95,14 @@ export default function ScanOptIn() {
               <span>Biggest Current Operational Friction</span>
               <textarea
                 className="flow-input"
+                name="friction"
                 rows="4"
                 placeholder="Briefly describe the single biggest bottleneck preventing your practice from moving faster..."
               />
             </label>
             <div className="scan-wide">
-              <button className="flow-primary" type="submit">
-                Submit &amp; Access Scheduler →
+              <button className="flow-primary" type="submit" disabled={submitState === "sending"}>
+                {submitState === "sending" ? "Submitting…" : "Submit & Access Scheduler →"}
               </button>
               <p className="flow-note">Strict 15 minutes. Confidential.</p>
             </div>
