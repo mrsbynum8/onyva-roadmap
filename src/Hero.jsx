@@ -203,7 +203,13 @@ function DossierContent() {
       </div>
 
       <div className="dossier-footer">
-        <button className="schedule" type="button">
+        <button
+          className="schedule"
+          type="button"
+          onClick={() => {
+            window.location.hash = "#/scan";
+          }}
+        >
           <span>Schedule The Scan</span>
         </button>
         <p className="confidential"><strong>Confidential</strong><br />For Internal Use Only</p>
@@ -396,14 +402,14 @@ function SystemSection() {
           <h3>The Pre-Op</h3>
           <b>Free. 15 minutes. 15 questions.</b>
           <p>A diagnostic self-assessment that reveals the blind spots in your operation. Answer what you can. Skip what you can't. Your blind spots tell the story.</p>
-          <a className="file-link" href="#pre-op"><span>Take The Pre-Op</span><i aria-hidden="true">→</i></a>
+          <a className="file-link" href="#/pre-op"><span>Take The Pre-Op</span><i aria-hidden="true">→</i></a>
         </article>
         <article>
           <span>Stage 2</span>
           <h3>The Roadmap</h3>
           <b>The verified diagnostic. 2-4 weeks.</b>
           <p>A clinical-grade examination of your entire operation. Every failure quantified in dollars and hours. Delivered with a prioritized correction protocol ranked by ROI.</p>
-          <a className="file-link" href="#scan"><span>Schedule The Scan</span><i aria-hidden="true">→</i></a>
+          <a className="file-link" href="#/scan"><span>Schedule The Scan</span><i aria-hidden="true">→</i></a>
         </article>
       </div>
       <p className="system-note">The Pre-Op shows you the questions you might not be able to answer. The Roadmap gives you the exact number, and the evidence to act on it.</p>
@@ -463,7 +469,7 @@ function FitSection() {
       <div className="scan-note" id="scan">
         <h3>What happens in The Scan:</h3>
         <p>The Scan is a 15-minute confidential call. We find out if we can help you and if we're a fit to work together. Then we tell you honestly: are you a fit for The Strategy, or not.</p>
-        <a className="scan-button" href="#final-scan">Schedule The Scan</a>
+        <a className="scan-button" href="#/scan">Schedule The Scan</a>
       </div>
     </PaperSection>
   );
@@ -502,8 +508,8 @@ function FinalCta() {
         <p>The Pre-Op is a 15-question diagnostic. It won't give you a score. It will show you the blind spots in your operation.</p>
         <p>Most clinic owners discover they can't answer half the questions with verified data. The ones they can't answer are usually where the biggest <span className="nowrap">revenue leaks hide.</span></p>
         <div className="cta-actions" id="final-scan">
-          <a className="file-link" href="#pre-op"><span>Take The Pre-Op</span><i aria-hidden="true">→</i></a>
-          <a className="file-link" href="#scan"><span>Schedule The Scan</span><i aria-hidden="true">→</i></a>
+          <a className="file-link" href="#/pre-op"><span>Take The Pre-Op</span><i aria-hidden="true">→</i></a>
+          <a className="file-link" href="#/scan"><span>Schedule The Scan</span><i aria-hidden="true">→</i></a>
         </div>
       </div>
       <footer className="site-footer">
