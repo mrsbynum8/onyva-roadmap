@@ -258,7 +258,16 @@ function HeroSection() {
         <picture className="scene-picture" aria-hidden="true">
           <source
             media="(max-width: 900px)"
+            srcSet="/assets/onyva-hero-background-mobile.webp"
+            type="image/webp"
+          />
+          <source
+            media="(max-width: 900px)"
             srcSet="/assets/onyva-hero-background-mobile.png"
+          />
+          <source
+            srcSet="/assets/onyva-hero-background.webp"
+            type="image/webp"
           />
           <img
             className="scene-art"
@@ -329,7 +338,7 @@ function LeakFinding() {
     >
       <div className="finding-layout">
         <div className="finding-stamp">
-          <span>$810,000</span>
+          <span>$680,000</span>
           <small>a year</small>
         </div>
         <div className="recovery-slip">
@@ -341,7 +350,7 @@ function LeakFinding() {
           </span>
         </div>
         <div className="finding-copy">
-          <p>One regenerative medicine clinic. 263 missed calls per month. 68% of all inbound volume never reaching a human.</p>
+          <p>One regenerative medicine clinic. 263 verified opportunities per month — potential patients who reached the clinic and never converted. A 68% miss rate on inbound volume.</p>
           <p>Seven operational failures identified across the intake system. Invisible from the outside, invisible to their marketing agency. The clinic owner <span className="nowrap">had no idea.</span> Their team <span className="nowrap">had no idea.</span></p>
           <p>The diagnostic revealed revenue leaking to voicemail, hold times, after-hours gaps, and broken workflows. That's the hole in the bucket.</p>
         </div>

@@ -4,8 +4,8 @@
   --plum: #533164;
   --plum-soft: #816a8e;
   --rule: rgba(83, 49, 100, 0.48);
-  --mono: "Courier New", "Courier Prime", ui-monospace, monospace;
-  --serif: "Bodoni 72", Didot, "Iowan Old Style", Georgia, serif;
+  --mono: "Courier Prime", "Courier New", ui-monospace, monospace;
+  --serif: "Bodoni Moda", "Bodoni 72", Didot, "Iowan Old Style", Georgia, serif;
 }
 
 * {
@@ -399,7 +399,7 @@ h1 em::after {
 .schedule span {
   animation: schedule-ink-breathe 3.8s ease-in-out 2s infinite;
   display: block;
-  font-family: "American Typewriter", var(--mono);
+  font-family: var(--mono);
   font-size: 1.36cqw;
   font-weight: 700;
   letter-spacing: 0.13em;
