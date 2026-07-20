@@ -202,7 +202,7 @@ export default function PreOp() {
       verifiedAnswersHtml: asHtml(verifiedLines),
       blindSpotsHtml: asHtml(blindSpotLines),
     });
-    setSubmitState(result.ok || result.skipped ? "sent" : "error");
+    setSubmitState(result.ok ? "sent" : "error");
     setStage("done");
   };
 

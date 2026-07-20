@@ -1,9 +1,12 @@
 const PRE_OP_WEBHOOK_URL = import.meta.env.VITE_PREOP_WEBHOOK_URL;
 const SCAN_WEBHOOK_URL = import.meta.env.VITE_SCAN_WEBHOOK_URL;
 
+// A missing URL is a build misconfiguration (env vars are baked in at build
+// time), never a success. Callers must not show a confirmation for it —
+// doing so silently drops the lead while telling the visitor they're captured.
 async function post(url, payload) {
   if (!url) {
-    console.warn("Webhook URL not configured; skipping submit.", payload);
+    console.error("Webhook URL not configured; submission dropped.", payload);
     return { ok: false, skipped: true };
   }
   try {

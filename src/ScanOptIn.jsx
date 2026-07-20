@@ -18,7 +18,7 @@ export default function ScanOptIn() {
       revenueTier: form.get("revenueTier"),
       friction: form.get("friction") || null,
     });
-    setSubmitState(result.ok || result.skipped ? "sent" : "error");
+    setSubmitState(result.ok ? "sent" : "error");
   };
 
   return (
