@@ -907,10 +907,11 @@ h1 em::after {
   animation: leak-number-punch 1.05s cubic-bezier(0.12, 0.92, 0.2, 1) 330ms backwards;
   color: #4b285f;
   font-family: var(--serif);
-  font-size: clamp(2.6rem, 5vw, 5rem);
+  font-size: clamp(2.6rem, 5vw, 4.15rem);
   line-height: 0.9;
   margin: 0;
   text-shadow: 0 1px 0 rgba(255, 255, 255, 0.38);
+  white-space: nowrap;
   transform-origin: center;
 }
 
@@ -934,10 +935,11 @@ h1 em::after {
   color: var(--plum);
   display: block;
   font-family: var(--serif);
-  font-size: clamp(1.95rem, 3.2vw, 3.25rem);
+  font-size: clamp(1.95rem, 3.2vw, 2.7rem);
   font-weight: 400;
   line-height: 0.98;
   margin: 0 0 18px;
+  white-space: nowrap;
 }
 
 .recovery-slip span {
@@ -1818,7 +1820,7 @@ h1 em::after {
   .finding-stamp {
     justify-self: start;
     min-height: 130px;
-    width: min(100%, 300px);
+    width: min(100%, 380px);
   }
 
   .recovery-slip {
@@ -1831,11 +1833,12 @@ h1 em::after {
   }
 
   .finding-stamp span {
-    font-size: clamp(2.55rem, 15vw, 4.3rem);
+    font-size: clamp(2.2rem, 14vw, 4rem);
+    white-space: nowrap;
   }
 
   .recovery-slip strong {
-    font-size: clamp(1.65rem, 7.2vw, 2.35rem);
+    font-size: clamp(1.25rem, 6.8vw, 2.35rem);
     white-space: nowrap;
   }
 
@@ -2031,11 +2034,11 @@ h1 em::after {
   align-items: baseline;
   color: var(--plum);
   display: flex;
+  flex-wrap: wrap;
   font-family: var(--mono);
   font-size: 0.8rem;
   font-weight: 700;
-  gap: 14px;
-  justify-content: space-between;
+  gap: 4px 14px;
   letter-spacing: 0.1em;
   margin: 0 0 18px;
   text-transform: uppercase;
@@ -2045,6 +2048,8 @@ h1 em::after {
   color: var(--plum-soft);
   font-size: 0.7rem;
   font-style: normal;
+  margin-left: auto;
+  white-space: nowrap;
 }
 
 .flow-card h1 {
