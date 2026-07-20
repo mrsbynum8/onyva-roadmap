@@ -1,5 +1,0 @@
-# Old onyva.ai static site used real paths; the new site uses hash routes.
-# Keeps existing links and bookmarks working after the domain cutover.
-/roadmap/pre-op.html   /#/pre-op   301
-/roadmap/opt-in.html   /#/scan     301
-/roadmap/*             /           301
