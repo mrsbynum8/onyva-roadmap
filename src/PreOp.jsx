@@ -181,14 +181,26 @@ export default function PreOp() {
     e.preventDefault();
     setSubmitState("sending");
     const formatAnswer = (a) => `${String(a.n).padStart(2, "0")}. ${a.label}: ${a.value}`;
+    const formatBlindSpot = (a) => `${String(a.n).padStart(2, "0")}. ${a.label}`;
+    // Plain-text (\n) copies are what the CRM contact record shows; the *Html copies
+    // exist only so the readout email renders line breaks in Outlook, which ignores
+    // white-space:pre-line.
+    const escapeHtml = (s) =>
+      s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    const asHtml = (lines) =>
+      lines.length ? lines.map(escapeHtml).join("<br>") : "(none)";
+    const verifiedLines = verified.map(formatAnswer);
+    const blindSpotLines = blindSpots.map(formatBlindSpot);
     const result = await submitPreOp({
       name: name.trim() || null,
       email: email.trim(),
       resultHeadline: readoutInfo.headline,
       verifiedCount: verified.length,
       blindSpotCount: blindSpots.length,
-      verifiedAnswers: verified.map(formatAnswer).join("\n") || "(none)",
-      blindSpots: blindSpots.map((a) => `${String(a.n).padStart(2, "0")}. ${a.label}`).join("\n") || "(none)",
+      verifiedAnswers: verifiedLines.join("\n") || "(none)",
+      blindSpots: blindSpotLines.join("\n") || "(none)",
+      verifiedAnswersHtml: asHtml(verifiedLines),
+      blindSpotsHtml: asHtml(blindSpotLines),
     });
     setSubmitState(result.ok || result.skipped ? "sent" : "error");
     setStage("done");
