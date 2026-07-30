@@ -340,26 +340,28 @@ function LeakFinding() {
       className="leak-finding"
       caseId="003"
       title="One clinic. One diagnostic."
-      note="Annual Leak"
+      note="Possible annual leakage"
     >
       <div className="finding-layout">
         <div className="finding-stamp">
           <span>$680,000</span>
           <small>a year</small>
         </div>
-        <div className="recovery-slip">
-          <b>Addressable recovery</b>
-          <strong>$155,000-$310,000</strong>
-          <span>
-            <span>2 months to break even.</span>
-            <span>2.8x-8.3x ROI in Year 1.</span>
-          </span>
+        <div className="leakage-note">
+          <b>Possible annual leakage</b>
+          <p>One diagnostic modeled approximately $680,000 in possible annual leakage. This was a directional estimate, not a measured loss, guaranteed recovery, or promise of results.</p>
         </div>
         <div className="finding-copy">
           <p>One regenerative medicine clinic. 263 verified opportunities per month — potential patients who reached the clinic and never converted. A 68% miss rate on inbound volume.</p>
-          <p>Seven operational failures identified across the intake system. Invisible from the outside, invisible to their marketing agency. The clinic owner <span className="nowrap">had no idea.</span> Their team <span className="nowrap">had no idea.</span></p>
-          <p>The diagnostic revealed revenue leaking to voicemail, hold times, after-hours gaps, and broken workflows. That's the hole in the bucket.</p>
+          <p>The diagnostic found gaps in how patient demand moved through the business. The specific findings and recommendations remain private to the clinic.</p>
         </div>
+      </div>
+      <div className="recovery-block">
+        <div className="recovery-slip">
+          <b>Potential recovery opportunity</b>
+          <strong>$155,000-$361,000</strong>
+        </div>
+        <p className="recovery-caveat">Separately, a working recovery scenario modeled what 3 to 7 additional right-fit patients per month could represent: approximately $155,000 to $361,000 in annual revenue. This was a scenario, not a forecast or promise. Actual results depend on the clinic's capacity, conversion behavior, implementation, and specific circumstances.</p>
       </div>
     </PaperSection>
   );
