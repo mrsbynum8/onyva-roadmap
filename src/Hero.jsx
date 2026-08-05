@@ -352,7 +352,6 @@ function LeakFinding() {
           <p>One diagnostic modeled approximately $680,000 in possible annual leakage. This was a directional estimate, not a measured loss, guaranteed recovery, or promise of results.</p>
         </div>
         <div className="finding-copy">
-          <p>One regenerative medicine clinic. 263 verified opportunities per month — potential patients who reached the clinic and never converted. A 68% miss rate on inbound volume.</p>
           <p>The diagnostic found gaps in how patient demand moved through the business. The specific findings and recommendations remain private to the clinic.</p>
         </div>
       </div>
